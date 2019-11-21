@@ -46,7 +46,7 @@ namespace Demo.AspNetCore.PushNotifications.Services
                 {
                     using (IPushSubscriptionStoreAccessor subscriptionStoreAccessor = _subscriptionStoreAccessorProvider.GetPushSubscriptionStoreAccessor())
                     {
-                        await subscriptionStoreAccessor.PushSubscriptionStore.ForEachSubscriptionAsync((PushSubscription subscription) =>
+                        await subscriptionStoreAccessor.PushSubscriptionStore.PerformSubscriptionAsync((PushSubscription subscription) =>
                         {
                             // Fire-and-forget 
                             _notificationService.SendNotificationAsync(subscription, message, _stopTokenSource.Token);

@@ -35,10 +35,10 @@ namespace Demo.AspNetCore.PushNotifications.Services.Sql
 
         public Task ForEachSubscriptionAsync(Action<PushSubscription> action)
         {
-            return this.ForEachSubscriptionAsync(action, CancellationToken.None);
+            return this.PerformSubscriptionAsync(action, CancellationToken.None);
         }
 
-        public Task ForEachSubscriptionAsync(Action<PushSubscription> action, CancellationToken cancellationToken)
+        public Task PerformSubscriptionAsync(Action<PushSubscription> action, CancellationToken cancellationToken)
         {
             return Task.Factory.StartNew(() =>
             {
