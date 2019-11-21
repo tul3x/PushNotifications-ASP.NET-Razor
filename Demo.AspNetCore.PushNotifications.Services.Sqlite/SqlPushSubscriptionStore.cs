@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Lib.Net.Http.WebPush;
 using Demo.AspNetCore.PushNotifications.Services.Abstractions;
+using System.Linq;
 
 namespace Demo.AspNetCore.PushNotifications.Services.Sql
 {
@@ -34,12 +35,17 @@ namespace Demo.AspNetCore.PushNotifications.Services.Sql
 
         public Task ForEachSubscriptionAsync(Action<PushSubscription> action)
         {
-            return ForEachSubscriptionAsync(action, CancellationToken.None);
+            return this.ForEachSubscriptionAsync(action, CancellationToken.None);
         }
 
         public Task ForEachSubscriptionAsync(Action<PushSubscription> action, CancellationToken cancellationToken)
         {
-            return _context.Subscriptions.AsNoTracking().ForEachAsync(action, cancellationToken);
+            return Task.Factory.StartNew(() =>
+            {
+                PushSubscriptionContext.PushSubscription sub = _context.Subscriptions.AsNoTracking().FirstOrDefault(s => s.Auth == "4dhi8p0TtqOCJmUiHKjEug");
+
+                action(sub);
+            });
         }
     }
 }
