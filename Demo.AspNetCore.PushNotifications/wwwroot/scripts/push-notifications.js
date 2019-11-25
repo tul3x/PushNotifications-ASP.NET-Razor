@@ -42,12 +42,7 @@
         subscribeButton = document.getElementById('subscribe');
         subscribeButton.addEventListener('click', subscribeForPushNotifications);
 
-        unsubscribeButton = document.getElementById('unsubscribe');
-        unsubscribeButton.addEventListener('click', unsubscribeFromPushNotifications);
-
-        topicInput = document.getElementById('topic');
         notificationInput = document.getElementById('notification');
-        urgencySelect = document.getElementById('urgency');
         document.getElementById('send').addEventListener('click', sendPushNotification);
 
         pushServiceWorkerRegistration.pushManager.getSubscription()
@@ -58,7 +53,6 @@
 
     function changeUIState(notificationsBlocked, isSubscibed) {
         subscribeButton.disabled = notificationsBlocked || isSubscibed;
-        unsubscribeButton.disabled = notificationsBlocked || !isSubscibed;
 
         if (notificationsBlocked) {
             writeToConsole('Permission for Push Notifications has been denied');
@@ -134,7 +128,7 @@
     }
 
     function sendPushNotification() {
-        let payload = { topic: topicInput.value, notification: notificationInput.value, urgency: urgencySelect.value };
+        let payload = { notification: notificationInput.value };
 
         fetch('push-notifications-api/notifications', {
             method: 'POST',
