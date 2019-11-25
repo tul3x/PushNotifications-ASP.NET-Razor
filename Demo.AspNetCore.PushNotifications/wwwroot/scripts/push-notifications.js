@@ -32,9 +32,9 @@
 
                 initializeUIState();
 
-                writeToConsole('Push Service Worker has been registered successfully');
+                writeToConsole('Push Service Worker erfolgreich registriert');
             }).catch(function (error) {
-                writeToConsole('Push Service Worker registration has failed: ' + error);
+                writeToConsole('Push Service Worker Fehler: ' + error);
             });
     }
 
@@ -55,7 +55,7 @@
         subscribeButton.disabled = notificationsBlocked || isSubscibed;
 
         if (notificationsBlocked) {
-            writeToConsole('Permission for Push Notifications has been denied');
+            writeToConsole('Berechtigung zum senden der Push-Nachrichten abgelehnt');
         }
     }
 
@@ -66,11 +66,11 @@
             PushNotificationsController.retrievePublicKey()
                 .then(function (retrievedPublicKey) {
                     applicationServerPublicKey = retrievedPublicKey;
-                    writeToConsole('Successfully retrieved Public Key');
+                    writeToConsole('Public Key erhalten');
 
                     subscribeForPushNotificationsInternal();
                 }).catch(function (error) {
-                    writeToConsole('Failed to retrieve Public Key: ' + error);
+                    writeToConsole('Fehler beim Erhalten des Public Key: ' + error);
                 });
         }
     }
@@ -84,12 +84,12 @@
                 PushNotificationsController.storePushSubscription(pushSubscription)
                     .then(function (response) {
                         if (response.ok) {
-                            writeToConsole('Successfully subscribed for Push Notifications');
+                            writeToConsole('Push-Abonnement erfogreich auf dem Server gespeichert');
                         } else {
-                            writeToConsole('Failed to store the Push Notifications subscrition on server');
+                            writeToConsole('Fehler beim Speichern des Abonnements auf dem Server');
                         }
                     }).catch(function (error) {
-                        writeToConsole('Failed to store the Push Notifications subscrition on server: ' + error);
+                        writeToConsole('Fehler beim Speichern des Abonnements auf dem Server: ' + error);
                     });
 
                 changeUIState(false, true);
@@ -97,32 +97,7 @@
                 if (Notification.permission === 'denied') {
                     changeUIState(true, false);
                 } else {
-                    writeToConsole('Failed to subscribe for Push Notifications: ' + error);
-                }
-            });
-    }
-
-    function unsubscribeFromPushNotifications() {
-        pushServiceWorkerRegistration.pushManager.getSubscription()
-            .then(function (pushSubscription) {
-                if (pushSubscription) {
-                    pushSubscription.unsubscribe()
-                        .then(function () {
-                            PushNotificationsController.discardPushSubscription(pushSubscription)
-                                .then(function (response) {
-                                    if (response.ok) {
-                                        writeToConsole('Successfully unsubscribed from Push Notifications');
-                                    } else {
-                                        writeToConsole('Failed to discard the Push Notifications subscrition from server');
-                                    }
-                                }).catch(function (error) {
-                                    writeToConsole('Failed to discard the Push Notifications subscrition from server: ' + error);
-                                });
-
-                            changeUIState(false, false);
-                        }).catch(function (error) {
-                            writeToConsole('Failed to unsubscribe from Push Notifications: ' + error);
-                        });
+                    writeToConsole('Fehler beim Speichern des Abonnements: ' + error);
                 }
             });
     }
@@ -137,12 +112,12 @@
         })
             .then(function (response) {
                 if (response.ok) {
-                    writeToConsole('Successfully sent Push Notification');
+                    writeToConsole('Nachrricht erfolgreich an der Server gesendet');
                 } else {
-                    writeToConsole('Failed to send Push Notification');
+                    writeToConsole('Fehler beim Senden der Nachricht');
                 }
             }).catch(function (error) {
-                writeToConsole('Failed to send Push Notification: ' + error);
+                writeToConsole('Fehler beim Senden der Nachricht: ' + error);
             });
     }
 
@@ -151,12 +126,12 @@
             initializeConsole();
 
             if (!('serviceWorker' in navigator)) {
-                writeToConsole('Service Workers are not supported');
+                writeToConsole('Service Worker nicht unterstützt');
                 return;
             }
 
             if (!('PushManager' in window)) {
-                writeToConsole('Push API not supported');
+                writeToConsole('Push API nicht unterstützt');
                 return;
             }
 

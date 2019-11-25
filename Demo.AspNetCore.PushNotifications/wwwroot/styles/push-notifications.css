@@ -1,20 +1,18 @@
-﻿button {
-    font-family: "Open Sans";
-    font-size: 13px;
-    font-weight: 700;
-    background-color: #eee;
-    vertical-align: baseline;
-    margin-top: 5px;
-    border-color: #ccc;
-    border-width: 1px;
-    border-style: solid !important;
+﻿h1 {
+    display: block;
+    /* font-size: 2vw; */
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    max-width: 1000px;
+    line-height: 1;
 }
 
-button:hover {
-    color: #f60;
-    border-color: #f60;
-    border-width: 1px;
-    border-style: solid !important;
+p {
+    max-width: 500vw;
+    margin-left: 0;
 }
 
 #dashboard-controls {
