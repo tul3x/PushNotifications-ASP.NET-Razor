@@ -9,10 +9,10 @@ namespace Demo.AspNetCore.PushNotifications.Services
 {
     internal class PushNotificationsQueue : IPushNotificationsQueue
     {
-        private readonly ConcurrentQueue<PushMessage> _messages = new ConcurrentQueue<PushMessage>();
+        private readonly ConcurrentQueue<PushMessageAuth> _messages = new ConcurrentQueue<PushMessageAuth>();
         private readonly SemaphoreSlim _messageEnqueuedSignal = new SemaphoreSlim(0);
 
-        public void Enqueue(PushMessage message)
+        public void Enqueue(PushMessageAuth message)
         {
             if (message == null)
             {
@@ -24,11 +24,11 @@ namespace Demo.AspNetCore.PushNotifications.Services
             _messageEnqueuedSignal.Release();
         }
 
-        public async Task<PushMessage> DequeueAsync(CancellationToken cancellationToken)
+        public async Task<PushMessageAuth> DequeueAsync(CancellationToken cancellationToken)
         {
             await _messageEnqueuedSignal.WaitAsync(cancellationToken);
 
-            _messages.TryDequeue(out PushMessage message);
+            _messages.TryDequeue(out PushMessageAuth message);
 
             return message;
         }

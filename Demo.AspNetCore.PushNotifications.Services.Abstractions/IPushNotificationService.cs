@@ -8,8 +8,8 @@ namespace Demo.AspNetCore.PushNotifications.Services.Abstractions
     {
         string PublicKey { get; }
 
-        Task SendNotificationAsync(PushSubscription subscription, PushMessage message);
+        Task SendNotificationAsync(PushSubscription subscription, PushMessageAuth message);
 
-        Task SendNotificationAsync(PushSubscription subscription, PushMessage message, CancellationToken cancellationToken);
+        Task SendNotificationAsync(PushSubscription subscription, PushMessageAuth message, CancellationToken cancellationToken);
     }
 }

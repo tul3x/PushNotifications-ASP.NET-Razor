@@ -11,8 +11,8 @@ namespace Demo.AspNetCore.PushNotifications.Services.Abstractions
 
         Task DiscardSubscriptionAsync(string endpoint);
 
-        Task ForEachSubscriptionAsync(Action<PushSubscription> action);
+        Task ForEachSubscriptionAsync(Action<PushSubscription> action, string auth);
 
-        Task PerformSubscriptionAsync(Action<PushSubscription> action, CancellationToken cancellationToken);
+        Task PerformSubscriptionAsync(Action<PushSubscription> action, CancellationToken cancellationToken, string auth);
     }
 }

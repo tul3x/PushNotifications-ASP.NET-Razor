@@ -6,8 +6,8 @@ namespace Demo.AspNetCore.PushNotifications.Services.Abstractions
 {
     public interface IPushNotificationsQueue
     {
-        void Enqueue(PushMessage message);
+        void Enqueue(PushMessageAuth message);
 
-        Task<PushMessage> DequeueAsync(CancellationToken cancellationToken);
+        Task<PushMessageAuth> DequeueAsync(CancellationToken cancellationToken);
     }
 }

@@ -40,7 +40,9 @@ namespace Demo.AspNetCore.PushNotifications.Services
         {
             while (!_stopTokenSource.IsCancellationRequested)
             {
-                PushMessage message = await _messagesQueue.DequeueAsync(_stopTokenSource.Token);
+                PushMessageAuth message = await _messagesQueue.DequeueAsync(_stopTokenSource.Token);
+
+                
 
                 if (!_stopTokenSource.IsCancellationRequested)
                 {
@@ -50,7 +52,7 @@ namespace Demo.AspNetCore.PushNotifications.Services
                         {
                             // Fire-and-forget 
                             _notificationService.SendNotificationAsync(subscription, message, _stopTokenSource.Token);
-                        }, _stopTokenSource.Token);
+                        }, _stopTokenSource.Token, message.Auth);
                     }
 
                 }

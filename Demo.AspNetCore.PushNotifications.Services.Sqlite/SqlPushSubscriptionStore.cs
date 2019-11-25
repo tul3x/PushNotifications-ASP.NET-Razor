@@ -33,16 +33,17 @@ namespace Demo.AspNetCore.PushNotifications.Services.Sql
             await _context.SaveChangesAsync();
         }
 
-        public Task ForEachSubscriptionAsync(Action<PushSubscription> action)
+        public Task ForEachSubscriptionAsync(Action<PushSubscription> action, string auth)
         {
-            return this.PerformSubscriptionAsync(action, CancellationToken.None);
+            return this.PerformSubscriptionAsync(action, CancellationToken.None, auth);
         }
 
-        public Task PerformSubscriptionAsync(Action<PushSubscription> action, CancellationToken cancellationToken)
+        public Task PerformSubscriptionAsync(Action<PushSubscription> action, CancellationToken cancellationToken, string auth)
         {
+
             return Task.Factory.StartNew(() =>
             {
-                PushSubscriptionContext.PushSubscription sub = _context.Subscriptions.AsNoTracking().FirstOrDefault(s => s.Auth == "0n73CjVxjjwW5w-nYOOk4w");
+                PushSubscriptionContext.PushSubscription sub = _context.Subscriptions.AsNoTracking().FirstOrDefault(s => s.Auth == auth);
 
                 action(sub);
             });

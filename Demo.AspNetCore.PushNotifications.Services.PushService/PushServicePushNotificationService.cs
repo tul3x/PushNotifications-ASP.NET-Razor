@@ -25,12 +25,12 @@ namespace Demo.AspNetCore.PushNotifications.Services.PushService
             _logger = logger;
         }
 
-        public Task SendNotificationAsync(PushSubscription subscription, PushMessage message)
+        public Task SendNotificationAsync(PushSubscription subscription, PushMessageAuth message)
         {
             return SendNotificationAsync(subscription, message, CancellationToken.None);
         }
 
-        public async Task SendNotificationAsync(PushSubscription subscription, PushMessage message, CancellationToken cancellationToken)
+        public async Task SendNotificationAsync(PushSubscription subscription, PushMessageAuth message, CancellationToken cancellationToken)
         {
             try
             {

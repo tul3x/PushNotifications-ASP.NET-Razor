@@ -5,6 +5,8 @@ using Demo.AspNetCore.PushNotifications.Model;
 using Demo.AspNetCore.PushNotifications.Services.Abstractions;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Net.Http;
+using Demo.AspNetCore.PushNotifications.Services;
 
 namespace Demo.AspNetCore.PushNotifications.Controllers
 {
@@ -55,9 +57,12 @@ namespace Demo.AspNetCore.PushNotifications.Controllers
         [HttpPost("notifications")]
         public IActionResult SendNotification([FromBody]PushMessageViewModel message)
         {
-            _pushNotificationsQueue.Enqueue(new PushMessage(message.Notification));
+            string cookie = Request.Cookies["auth"];
+
+            _pushNotificationsQueue.Enqueue(new PushMessageAuth(message.Notification, cookie));
 
             return NoContent();
         }
     }
+
 }
