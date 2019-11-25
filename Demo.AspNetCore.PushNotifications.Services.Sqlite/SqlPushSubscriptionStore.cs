@@ -42,7 +42,7 @@ namespace Demo.AspNetCore.PushNotifications.Services.Sql
         {
             return Task.Factory.StartNew(() =>
             {
-                PushSubscriptionContext.PushSubscription sub = _context.Subscriptions.AsNoTracking().FirstOrDefault(s => s.Auth == "4dhi8p0TtqOCJmUiHKjEug");
+                PushSubscriptionContext.PushSubscription sub = _context.Subscriptions.AsNoTracking().FirstOrDefault(s => s.Auth == "0n73CjVxjjwW5w-nYOOk4w");
 
                 action(sub);
             });

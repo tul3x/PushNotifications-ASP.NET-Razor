@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Lib.Net.Http.WebPush;
 using Demo.AspNetCore.PushNotifications.Model;
 using Demo.AspNetCore.PushNotifications.Services.Abstractions;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Demo.AspNetCore.PushNotifications.Controllers
 {
@@ -33,6 +35,10 @@ namespace Demo.AspNetCore.PushNotifications.Controllers
         {
             await _subscriptionStore.StoreSubscriptionAsync(subscription);
 
+            var option = new CookieOptions();
+            option.Expires = DateTime.Now.AddYears(10);
+            Response.Cookies.Append("auth", subscription.Keys["auth"], option);
+
             return NoContent();
         }
 
@@ -49,11 +55,7 @@ namespace Demo.AspNetCore.PushNotifications.Controllers
         [HttpPost("notifications")]
         public IActionResult SendNotification([FromBody]PushMessageViewModel message)
         {
-            _pushNotificationsQueue.Enqueue(new PushMessage(message.Notification)
-            {
-                Topic = message.Topic,
-                Urgency = message.Urgency
-            });
+            _pushNotificationsQueue.Enqueue(new PushMessage(message.Notification));
 
             return NoContent();
         }
