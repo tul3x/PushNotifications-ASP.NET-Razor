@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/styles/push-notifications.css" />
     <link rel="stylesheet" type="text/css" href="/styles/buttonstyle.css">
+    <link rel="manifest" href="/manifest.json">
     <title>PushNotifications-Demo</title>
 </head>
 
@@ -15,7 +16,7 @@
         <button disabled="disabled" id="subscribe">Push-Nachrichten abbonieren</button>
         <br><br>
         <input id="notification" size="65" title="Nachrricht" />
-        <div class="myButton" id="send">Push-Nachricht senden</div>
+        <button class="myButton" id="send">Push-Nachricht senden</button>
     </div>
     <hr />
     <div id="dashboard-console">
@@ -24,11 +25,10 @@
         <button id="clear" style="position: relative; top: 3px;">Clear</button>
     </div>
 
-
-
-
     <script src="scripts/push-notifications-controller.js"></script>
     <script src="scripts/push-notifications.js"></script>
+
+
 </body>
 
 </html>
