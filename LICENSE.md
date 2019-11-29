@@ -1,3 +1,5 @@
+## Der grundlegende Baustein des Programms besiert auf der Arbeit von Tomasz Pęczek
+
 The MIT License (MIT)
 
 Copyright (c) 2017 - 2019 Tomasz Pęczek
