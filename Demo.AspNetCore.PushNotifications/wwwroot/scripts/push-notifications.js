@@ -26,7 +26,7 @@
     }
 
     function registerPushServiceWorker() {
-        navigator.serviceWorker.register('/scripts/service-workers/push-service-worker.js', { scope: '/scripts/service-workers/push-service-worker/' })
+        navigator.serviceWorker.register('/push-service-worker.js')
             .then(function (serviceWorkerRegistration) {
                 pushServiceWorkerRegistration = serviceWorkerRegistration;
 
