@@ -112,7 +112,7 @@
         })
             .then(function (response) {
                 if (response.ok) {
-                    writeToConsole('Nachrricht erfolgreich an der Server gesendet');
+                    writeToConsole('Nachricht erfolgreich an der Server gesendet');
                 } else {
                     writeToConsole('Fehler beim Senden der Nachricht');
                 }

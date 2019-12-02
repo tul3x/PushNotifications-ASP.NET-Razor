@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Lib.Net.Http.WebPush;
 using Demo.AspNetCore.PushNotifications.Services.Abstractions;
+using System.IO;
 
 namespace Demo.AspNetCore.PushNotifications.Services.PushService
 {
@@ -35,10 +36,12 @@ namespace Demo.AspNetCore.PushNotifications.Services.PushService
             try
             {
                 await _pushClient.RequestPushMessageDeliveryAsync(subscription, message, cancellationToken);
+                File.AppendAllText("log.txt", "Nachricht erfolgreich an die Push-Dienst geleitet" + Environment.NewLine);
             }
             catch (Exception ex)
             {
                 await HandlePushMessageDeliveryExceptionAsync(ex, subscription);
+                File.AppendAllText("log.txt", "Fehler beim Senden der Nachricht: " + ex.Message + " - " + ex.InnerException + Environment.NewLine);
             }
         }
 

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Lib.Net.Http.WebPush;
 using Demo.AspNetCore.PushNotifications.Services.Abstractions;
+using System.IO;
+using System;
 
 namespace Demo.AspNetCore.PushNotifications.Services
 {
@@ -42,7 +44,11 @@ namespace Demo.AspNetCore.PushNotifications.Services
             {
                 PushMessageAuth message = await _messagesQueue.DequeueAsync(_stopTokenSource.Token);
 
-                
+                if(message != null)
+                {
+                    string now = DateTime.Now.ToString("dd.MM.yyy-HH:mm:ss");
+                    File.AppendAllText("log.txt", now + ": Nachricht erfolgreich Dequeued: " + message.Content + Environment.NewLine);
+                }
 
                 if (!_stopTokenSource.IsCancellationRequested)
                 {

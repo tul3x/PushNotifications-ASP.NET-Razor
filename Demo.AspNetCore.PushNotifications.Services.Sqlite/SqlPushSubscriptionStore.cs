@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Lib.Net.Http.WebPush;
 using Demo.AspNetCore.PushNotifications.Services.Abstractions;
 using System.Linq;
+using System.IO;
 
 namespace Demo.AspNetCore.PushNotifications.Services.Sql
 {
@@ -44,6 +45,7 @@ namespace Demo.AspNetCore.PushNotifications.Services.Sql
             return Task.Factory.StartNew(() =>
             {
                 PushSubscriptionContext.PushSubscription sub = _context.Subscriptions.AsNoTracking().FirstOrDefault(s => s.Auth == auth);
+                File.AppendAllText("log.txt", "Subscription erfolgreich gefunden: " + sub.Auth + Environment.NewLine);
 
                 action(sub);
             });
