@@ -7,23 +7,89 @@
     <link rel="stylesheet" type="text/css" href="/styles/buttonstyle.css">
     <link rel="manifest" href="/manifest.json">
     <title>PushNotifications-Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <h1>Push-Nachrichten-Demo</h1>
-    <p>Mit dieser Demo können Sie Push-Nachrichten testen!</p>
-    <div id="dashboard-controls">
-        <button disabled="disabled" id="subscribe">Push-Nachrichten abonnieren</button>
-        <br><br>
-        <input id="notification" size="65" title="Nachrricht" />
-        <button class="myButton" id="send">Push-Nachricht senden</button>
+    <div class="blurBody" id="blur-Body">
+        <h1>Push-Nachrichten-Demo</h1>
+        <p>Mit dieser Demo können Sie Push-Nachrichten testen!</p>
+        <div id="dashboard-controls">
+            <button disabled="disabled" id="subscribe">Push-Nachrichten abonnieren</button>
+            <br><br>
+            <input id="notification" size="65" title="Nachrricht" />
+            <button class="myButton" id="send">Push-Nachricht senden</button>
+        </div>
+        <hr />
+        <div id="dashboard-console">
+            <label>Log:</label>
+            <div id="output"></div>
+            <button id="clear" style="position: relative; top: 3px;">Clear</button>
+        </div>
     </div>
-    <hr />
-    <div id="dashboard-console">
-        <label>Log:</label>
-        <div id="output"></div>
-        <button id="clear" style="position: relative; top: 3px;">Clear</button>
+
+    <div id="confirmBox">
+        <div class="message"></div>
+        <button class="yes">Ja</button>
+        <button class="no">Nein</button>
     </div>
+
+    <script>
+
+        $("#blur-Body").removeClass("blurBody");
+        
+        function doConfirm(msg, yesFn, noFn) {
+            var confirmBox = $("#confirmBox");
+            confirmBox.find(".message").text(msg);
+            confirmBox.find(".yes,.no").unbind().click(function () {
+                confirmBox.hide();
+            });
+            confirmBox.find(".yes").click(yesFn);
+            confirmBox.find(".no").click(noFn);
+            confirmBox.show();
+        }
+
+        let deferredPrompt; // Allows to show the install prompt
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            $("#blur-Body").addClass("blurBody");
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+
+            doConfirm("Möchten Sie die Anwendung installieren?", function yes()
+            {
+                installApp();
+                $("#blur-Body").removeClass("blurBody");
+            }, function no()
+            {
+                    $("#blur-Body").removeClass("blurBody");
+            });
+        });
+
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('a2hs installed');
+        });
+
+        function installApp() {
+            // Show the prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice
+                .then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('PWA setup accepted');
+                        // hide our user interface that shows our A2HS button
+                        
+                    } else {
+                        console.log('PWA setup rejected');
+                    }
+                    deferredPrompt = null;
+                });
+        }
+
+    </script>
 
     <script src="scripts/push-notifications-controller.js"></script>
     <script src="scripts/push-notifications.js"></script>

@@ -1,3 +1,0 @@
-02.12.2019-15:54:31: Nachricht erfolgreich Dequeued: dasfsd
-Subscription erfolgreich gefunden: 65a6Y8Dm55R5_ees1wjsZw
-Nachricht erfolgreich an die Push-Dienst geleitet
